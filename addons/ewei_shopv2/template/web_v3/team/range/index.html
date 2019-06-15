@@ -1,0 +1,56 @@
+{template '_header'}
+<div class="page-header">当前位置：<span class="text-primary">级差规则列表</span></div>
+<div class="page-content">
+    <form action="./index.php" method="get" class="form-horizontal form-search" role="form">
+        <input type="hidden" name="c" value="site"/>
+        <input type="hidden" name="a" value="entry"/>
+        <input type="hidden" name="m" value="ewei_shopv2"/>
+        <input type="hidden" name="do" value="web"/>
+        <input type="hidden" name="r" value="member.level"/>
+        <div class="page-toolbar">
+            <div class="pull-left">
+                {ifp 'member.level.add'}
+                <a class='btn btn-primary btn-sm' href="{php echo webUrl('team/range/add')}"><i class='fa fa-plus'></i> 添加级差规则</a>
+                {/if}
+            </div>
+
+        </div>
+    </form>
+    {if empty($list)}
+    <div class="panel panel-default">
+        <div class="panel-body empty-data">未查询到相关数据</div>
+    </div>
+    {else}
+    <form action="" method="post">
+        <table class="table table-hover table-responsive">
+            <thead>
+            <tr>
+                <th style="width:16%;">id</th>
+                <th style="width:16%;">级差条件</th>
+                <th style="width:16%;">拨出比例</th>
+                <th style="width: 20%;">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {loop $list $v}
+            <tr>
+                <td>{$v['id']}</td>
+                <td>{$v['total']} 万</td>
+                <td>{$v['ratio']} %</td>
+                <td>
+                    <a data-toggle='ajaxRemove'
+                       href="{php echo webUrl('member/transfer/del', array('id' => $v['id']))}"
+                       class="btn btn-op btn-operation" data-confirm='确认要删除此条记录吗?'>
+					<span data-toggle="tooltip" data-placement="top" data-original-title="删除">
+						<i class='icow icow-shanchu1'></i>
+					</span>
+                    </a>
+                </td>
+            </tr>
+            {/loop}
+            </tbody>
+        </table>
+    </form>
+    {/if}
+</div>
+{template '_footer'}
